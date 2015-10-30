@@ -147,8 +147,10 @@ def red_cars ():
     for j,i in enumerate (data['cars_marka']):
         if r_car == i:
             ind.append(j)
-        else:
+            continue
+        elif r_car == i:
             output_func('Неверно введено наименование машины')
+            break
     for i in ind:
         output_func('Введите новое наименование машины')
         k = input_func()
@@ -158,6 +160,7 @@ def red_cars ():
         k = input_func()
         data['cars_power'].insert(i,k)
         data['cars_power'].pop(i+1)
+        break
     output_func (data['cars_marka'][i],data['cars_power'][i])
 
 #Удаление
@@ -239,9 +242,9 @@ output_func('1. Выберите действие: редактирование(
 try:
     vybor_red = int(input_func())
 except ValueError:
-    output_func ('Неверное значение! Выход из программы.')
+    output_func ('Неверное значение!')
 finally:
-    sys.exit(0)
+    pass
 
 
 if vybor_red==1:
