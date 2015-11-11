@@ -6,6 +6,13 @@ a = int (input ('Введите количество уток: '))
 b = int (input ('Введите количество коров: '))
 c = int (input ('Введите количество собак: '))
 
+def a_month(x,name_animal):
+    for j, i in enumerate (x):
+            print ('\n',name_animal, '№ ',j+1)
+            i.status ()
+            i.status_aM ()
+
+
 def itog_all (x):
       
     status_run = []
@@ -53,19 +60,17 @@ class Animal:
         self.dist = dist
         self.voice = voice
         self.voice_use = voice_use
-        self.usefulness = usefulness        
+        self.usefulness = usefulness
+        self.usefulness_proz = usefulness_proz
 
         
 		
 class Duck(Animal):
 
     def __init__(self):
-        
-        self.dist = random.randint(1,10)
-        self.voice = 'Кря'
-        self.voice_use =random.randint(0,100)
-        self.usefulness = 'Яйцо'
-        self.usefulness_proz=random.randint(1,3)
+
+        super ().__init__(random.randint(1,10),'Кря',random.randint(0,100),'Яйцо',random.randint(1,3))
+
         self.aMdist=self.dist*30
         self.aMvoice_use=self.voice_use*30
         self.aMusefulness_proz=self.usefulness_proz*30
@@ -83,12 +88,9 @@ class Duck(Animal):
 class Cow(Animal):
     
     def __init__(self):
-        
-        self.dist = random.randint(1,20)
-        self.voice = 'Му'
-        self.voice_use =random.randint(0,100)
-        self.usefulness = 'Молоко'
-        self.usefulness_proz=random.randint(5,10)        
+
+        super ().__init__(random.randint(1,20),'Му',random.randint(0,100),'Молоко',random.randint(5,10))
+
         self.aMdist=self.dist*30
         self.aMvoice_use=self.voice_use*30
         self.aMusefulness_proz=self.usefulness_proz*30
@@ -107,12 +109,9 @@ class Cow(Animal):
 class Dog(Animal):
     
     def __init__(self):
-        
-        self.dist = random.randint(10,50)
-        self.voice = 'Гав'
-        self.voice_use = random.randint(0,100)
-        self.usefulness = 'Безопасность'
-        self.usefulness_proz=random.randint(0,100)       
+
+        super ().__init__(random.randint(10, 50),'Гав',random.randint(0,100),'Безопасность',random.randint(0,100))
+
         self.aMdist=self.dist*30
         self.aMvoice_use=self.voice_use*30
         self.aMusefulness_proz=self.usefulness_proz
@@ -150,27 +149,13 @@ class Farm:
 
     def afterMonth(self):
 
-        #Утки
-            
-        for j, i in enumerate (self.animals ['ducks']):
-            print ('\nУтка № ',j+1)
-            i.status ()
-            i.status_aM ()
+        a_month(self.animals ['ducks'],'Утка')
 
-        #Коровы            
-            
-        for j, i in enumerate (self.animals ['cows']):
-            print ('\nКорова № ',j+1)
-            i.status ()
-            i.status_aM ()
+        a_month(self.animals ['cows'],'Корова')
 
-        #Собаки            
-            
-        for j, i in enumerate (self.animals ['dogs']):
-            print ('\nСобака № ',j+1)
-            i.status ()
-            i.status_aM ()
-            
+        a_month(self.animals ['dogs'],'Собака')
+
+
     def itog (self):
 
         print ('\nСводная информация:\n','\nУтки:')
