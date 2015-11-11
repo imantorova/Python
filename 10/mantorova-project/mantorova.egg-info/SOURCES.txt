@@ -1,0 +1,10 @@
+README.txt
+setup.py
+farm/__init__.py
+farm/animals.py
+mantorova/__init__.py
+mantorova/core.py
+mantorova.egg-info/PKG-INFO
+mantorova.egg-info/SOURCES.txt
+mantorova.egg-info/dependency_links.txt
+mantorova.egg-info/top_level.txt
