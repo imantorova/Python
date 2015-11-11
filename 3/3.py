@@ -1,6 +1,6 @@
 #coding: utf-8
 
-import pickle,os,sys
+import pickle,os
 
 FILENAME = 'data.pickle'
 kom = 0
@@ -13,12 +13,12 @@ power_new = []
 index_slovo = []
 index_slovo_poln = []
 
-#Проверка на существование файла
-        
+#Проверка на существование файла c указанным именем
+
 try:
     os.path.exists(FILENAME)
     pick_load ()
-except:
+except NameError:
     data = {
         'cars_marka': ['BMW', 'Audi', 'Ford', 'Volkswagen', 'Volvo', 'Lada','Hunday'],
         'cars_power':['250','144','93','134', '80', '100', '174']
