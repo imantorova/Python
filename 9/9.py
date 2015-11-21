@@ -6,6 +6,7 @@ import random
 a = int (input ('Введите количество уток: '))
 b = int (input ('Введите количество коров: '))
 c = int (input ('Введите количество собак: '))
+n = input('Введите голос животного')
 
 def a_month(x,name_animal):
     for j, i in enumerate (x):
@@ -181,6 +182,13 @@ class Farm:
         itog_all_s(self.animals ['dogs'])
 
 
+    def __getattr__(self, name):
+        if name=='Кря':
+            print('Утка ',self.animals['ducks'])
+        else:
+            print ('Собака ',self.animals['dogs'])
+            print ('Корова ',self.animals['cows'])
+
 
 
 
@@ -191,9 +199,10 @@ if __name__ == '__main__':
     farm.afterMonth ()
     farm.itog ()
     print('Утка ',Duck(),' собака',Dog(),', корова',Cow())
-'''
-*Что и как должно выводится в методе __repr__ так и не понятно
-'''
+    farm.__getattr__(n)
+
+
+
 
 
 
