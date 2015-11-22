@@ -106,7 +106,8 @@ class pol:
 
 class But_save:
     def __init__(self):
-        self.but=Button(root, text = 'СОХРАНИТЬ',font='Arial 10').grid(row=11,column=11,columnspan= 2)
+        self.but=Button(root, text = 'СОХРАНИТЬ',font='Arial 10')
+        self.but.grid(row=11,column=11,columnspan= 2)
         self.but.bind("<Button-1>",vyvod_v_doc)
 
 
