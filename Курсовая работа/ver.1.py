@@ -38,8 +38,10 @@ class inputs(Shablon_text_input):
                  'i_bukva_columnspan':[2,2,2,3]
         }
         for i in range (4):
-            b=super().__init__(i_bukva['dl_bukva'][i],i_bukva['i_bukva_row'][i],
+            super().__init__(i_bukva['dl_bukva'][i],i_bukva['i_bukva_row'][i],
                              i_bukva['i_bukva_column'][i],i_bukva['i_bukva_columnspan'][i])
+
+
         #цифры!
         i_cifra={'dl_cifra':[20,30,20,12,13,12,15,12,15,81],
                  'i_cifra_row':[3,3,4,6,6,7,7,8,8,10],
