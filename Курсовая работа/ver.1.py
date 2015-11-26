@@ -13,8 +13,10 @@ class Shablon_text_label:
 
 class Shablon_text_input:
     def __init__(self,w,r2,c2,cs2):
-        e=Entry(root,width=w,bd=2)
-        e.grid(row=r2,column=c2,columnspan=cs2)
+        self.e=Entry(root,width=w,bd=2)
+        self.e.bind("<Enter>",print('Pole',self.e.get(),'/'))
+        self.e.grid(row=r2,column=c2,columnspan=cs2)
+
 
 class labels(Shablon_text_label):
     def __init__(self):
@@ -38,9 +40,8 @@ class inputs(Shablon_text_input):
                  'i_bukva_columnspan':[2,2,2,3]
         }
         for i in range (4):
-            super().__init__(i_bukva['dl_bukva'][i],i_bukva['i_bukva_row'][i],
+            self.buk=super().__init__(i_bukva['dl_bukva'][i],i_bukva['i_bukva_row'][i],
                              i_bukva['i_bukva_column'][i],i_bukva['i_bukva_columnspan'][i])
-
 
         #цифры!
         i_cifra={'dl_cifra':[20,30,20,12,13,12,15,12,15,81],
@@ -49,7 +50,7 @@ class inputs(Shablon_text_input):
                  'i_cifra_columnspan':[3,3,3,1,1,1,2,1,2,9]
         }
         for i in range (10):
-            super().__init__(i_cifra['dl_cifra'][i],i_cifra['i_cifra_row'][i],
+            self.cif=super().__init__(i_cifra['dl_cifra'][i],i_cifra['i_cifra_row'][i],
                              i_cifra['i_cifra_column'][i],i_cifra['i_cifra_columnspan'][i])
         #буквы и цифры
         i_b_c={'dl_b_c':[20,30,81,15],
@@ -58,13 +59,15 @@ class inputs(Shablon_text_input):
                  'i_b_c_columnspan':[3,3,9,2]
         }
         for i in range (4):
-            super().__init__(i_b_c['dl_b_c'][i],i_b_c['i_b_c_row'][i],
+            self.b_c=super().__init__(i_b_c['dl_b_c'][i],i_b_c['i_b_c_row'][i],
                              i_b_c['i_b_c_column'][i],i_b_c['i_b_c_columnspan'][i])
+
         #не проверить
         ost={'dl':[20,12],'o_row':[6,9],'o_column':[7,3],'o_columnspan':[3,1]}
         for i in range (2):
-            super().__init__(ost['dl'][i],ost['o_row'][i],
-                             ost['o_column'][i],ost['o_columnspan'][i])
+            self.ostaln=super().__init__(ost['dl'][i],ost['o_row'][i],
+                                         ost['o_column'][i],ost['o_columnspan'][i])
+
 
 class pol:
     def __init__(self):
