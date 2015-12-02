@@ -1,24 +1,21 @@
-# coding: utf-8
-
+﻿# -*- coding: utf-8 -*-
 import sys
-from PyQt5 import QtCore
 from PyQt5 import QtWidgets
-       
-class Ui_MainWindow(QtWidgets.QWidget):
+from PyQt5 import QtCore
+ 
+class Forma(QtWidgets.QWidget):
     
     def __init__(self):
         super().__init__()
         self.initUI()
-
-    def initUI(self):      
-        #создание фонового виджета
-        MainWindow.resize(634, 379)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.Widget = QtWidgets.QWidget(self.centralwidget)
-        self.Widget.setGeometry(QtCore.QRect(0, 10, 631, 341))
-        MainWindow.setCentralWidget(self.centralwidget)
-
         
+        
+    def initUI(self):
+        self.resize(634, 379)
+        self.setGeometry(QtCore.QRect(0, 10, 631, 341))
+        self.centralwidget = QtWidgets.QWidget(self)
+
+
         #надписи
         self.l_lst={
             'text':["Фамилия","имя","отчество","дата рождения", "место рождения", "пол","количество комнат","паспорт: серия",
@@ -32,11 +29,11 @@ class Ui_MainWindow(QtWidgets.QWidget):
             }
         for i in range (23):
                     
-            self.label = QtWidgets.QLabel(self.Widget)
+            self.label = QtWidgets.QLabel(self)
             self.label.setGeometry(QtCore.QRect(self.l_lst['x'][i], self.l_lst['y'][i], self.l_lst['width'][i], self.l_lst['height'][i]))
             self.label.setText(self.l_lst['text'][i])
-            
-           
+
+                
         #поля ввода текста
         self.e_lst={
             'x':[53,240,459,270,85,270,84,105,74,221,163,315,455,584,110,110,110],
@@ -48,84 +45,76 @@ class Ui_MainWindow(QtWidgets.QWidget):
 
         for i in range (17):
         
-            self.lineEdit = QtWidgets.QLineEdit(self.Widget)
+            self.lineEdit = QtWidgets.QLineEdit(self)
             self.lineEdit.setGeometry(QtCore.QRect(self.e_lst['x'][i], self.e_lst['y'][i], self.e_lst['width'][i], self.e_lst['height'][i]))
-            
-        
-       
-        
+
         #переключатели для типа "пол"
-        self.radioButton = QtWidgets.QRadioButton(self.Widget)
+        self.radioButton = QtWidgets.QRadioButton(self)
         self.radioButton.setGeometry(QtCore.QRect(480, 30, 66, 18))
         self.radioButton.setText("мужской")
         
-        self.radioButton_2 = QtWidgets.QRadioButton(self.Widget)
+        self.radioButton_2 = QtWidgets.QRadioButton(self)
         self.radioButton_2.setGeometry(QtCore.QRect(552, 30, 66, 18))
         self.radioButton_2.setText("женский")
         
         #объединение в группу переключателей
-        self.buttonGroup = QtWidgets.QButtonGroup(MainWindow)
+        self.buttonGroup = QtWidgets.QButtonGroup(self)
         self.buttonGroup.addButton(self.radioButton)
         self.buttonGroup.addButton(self.radioButton_2)
 
         #-------
         #переключатели для типа "количество комнат"
-        self.radioButton_3 = QtWidgets.QRadioButton(self.Widget)
+        self.radioButton_3 = QtWidgets.QRadioButton(self)
         self.radioButton_3.setGeometry(QtCore.QRect(441, 150, 29, 18))
         self.radioButton_3.setText("1")
         
-        self.radioButton_4 = QtWidgets.QRadioButton(self.Widget)
+        self.radioButton_4 = QtWidgets.QRadioButton(self)
         self.radioButton_4.setGeometry(QtCore.QRect(476, 150, 29, 18))
         self.radioButton_4.setText("2")
 
-        self.radioButton_5 = QtWidgets.QRadioButton(self.Widget)
+        self.radioButton_5 = QtWidgets.QRadioButton(self)
         self.radioButton_5.setGeometry(QtCore.QRect(511, 150, 29, 18))
         self.radioButton_5.setText("3")
 
         #объединение в группу переключателей
-        self.buttonGroup_2 = QtWidgets.QButtonGroup(MainWindow)
+        self.buttonGroup_2 = QtWidgets.QButtonGroup(self)
         self.buttonGroup_2.addButton(self.radioButton_3)
         self.buttonGroup_2.addButton(self.radioButton_4)
         self.buttonGroup_2.addButton(self.radioButton_5)
 
         
         #поле типа дата        
-        self.dateEdit = QtWidgets.QDateEdit(self.Widget)
+        self.dateEdit = QtWidgets.QDateEdit(self)
         self.dateEdit.setGeometry(QtCore.QRect(86, 30, 85, 20))
         self.dateEdit.setDateTime(QtCore.QDateTime(QtCore.QDate(1900, 1, 1)))
    
-        self.dateEdit_2 = QtWidgets.QDateEdit(self.Widget)
+        self.dateEdit_2 = QtWidgets.QDateEdit(self)
         self.dateEdit_2.setGeometry(QtCore.QRect(534, 60, 85, 20))
         self.dateEdit_2.setDateTime(QtCore.QDateTime(QtCore.QDate(2000, 1, 1)))
         
-        self.dateEdit_3 = QtWidgets.QDateEdit(self.Widget)
+        self.dateEdit_3 = QtWidgets.QDateEdit(self)
         self.dateEdit_3.setGeometry(QtCore.QRect(539, 240, 85, 20))
         self.dateEdit_3.setDateTime(QtCore.QDateTime(QtCore.QDate(2015, 1, 1)))
 
-        
-        #кнопка для проверки введенных данных         
-        self.pushButton = QtWidgets.QPushButton(self.Widget)
+
+        self.pushButton = QtWidgets.QPushButton("Проверить",self)
         self.pushButton.setGeometry(QtCore.QRect(430, 310, 75, 23))
-        self.pushButton.setText("Записать")
-        self.pushButton.clicked.connect (self.funcProve)
+        self.pushButton.clicked.connect(self.showDialog)
 
-        
-        #кнопка для вывода в файл введенных данных         
-        self.pushButton_2 = QtWidgets.QPushButton(self.Widget)
+        self.pushButton_2 = QtWidgets.QPushButton("Сохранить",self)
         self.pushButton_2.setGeometry(QtCore.QRect(550, 310, 75, 23))
-        self.pushButton_2.setText("Сохранить")
-       # self.pushButton.clicked.connect (self.funcSave())
-        
-    def funcProve(self):
-        print ('!!!')
+        self.pushButton_2.clicked.connect(self.showDialog)
+
+        self.show()
 
         
-
-if __name__ == "__main__":
-    
+        
+    def showDialog(self,text):
+        self.text=self.dateEdit.text()
+        print('123',self.text)
+        
+        
+if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    Ui_MainWindow()
-    MainWindow.show()
+    forma = Forma()
     sys.exit(app.exec_())
-
