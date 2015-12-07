@@ -113,8 +113,6 @@ class Forma(QtWidgets.QWidget):
             self.lE_lst.append(self.lineEdit)
 
 
-         
-
         #переключатели для типа "пол"
         self.radioButton = QtWidgets.QRadioButton(self)
         self.radioButton.setGeometry(QtCore.QRect(480, 30, 66, 18))
@@ -177,7 +175,6 @@ class Forma(QtWidgets.QWidget):
 
         self.show()
 
-
     def Pol_str(self,i):
         
         #считывание выбранного варианта для данных типа "пол"
@@ -203,7 +200,6 @@ class Forma(QtWidgets.QWidget):
         elif i == 3:
             self.text_lst_4 = 3
             self.all_form.append(self.text_lst_4)
-
 
     def Save_data(self):
         
