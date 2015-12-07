@@ -35,7 +35,7 @@ class Forma(QtWidgets.QWidget):
         self.text_lst_2 = []
         self.text_lst_3 = 0
         self.text_lst_4 = 0
-        self.all_form = ['мужской','1']
+        self.all_form = ['#Значение!#','#Значение!#']
 
         #надписи
         self.l_lst = {
@@ -249,7 +249,7 @@ class Forma(QtWidgets.QWidget):
         p = document.add_paragraph('Гражданин Российской Федерации %(2)s %(3)s %(4)s %(19)s года рождения, место рождения:%(5)s, пол: %(0)s, '
                                    'паспорт %(6)s %(7)s выдан %(20)s г. %(8)s, зарегистрированный по адресу (адрес для уведомлений): %(9)s, '
                                    'именуемый далее «Покупатель», с другой стороны,'
-                                   'заключили настоящий Договор о нижеследующем:'%{"0":self.all_form[0],"2":self.all_form[2],"3":self.all_form[3],
+                                   ' заключили настоящий Договор о нижеследующем:'%{"0":self.all_form[0],"2":self.all_form[2],"3":self.all_form[3],
                                     "4":self.all_form[4],"5":self.all_form[5],"6":self.all_form[6],
                                     "7":self.all_form[7],"8":self.all_form[8],"9":self.all_form[9],
                                     "19":self.all_form[19],"20":self.all_form[20]})
@@ -312,8 +312,10 @@ class Forma(QtWidgets.QWidget):
         p = document.add_paragraph('Настоящий Договор составлен и подписан в трех экземплярах, имеющих одинаковую юридическую силу.'
                                    ,style='ListNumber')
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+        
         self.fio = self.all_form[2]+' '+self.all_form[3]+' '+self.all_form[4]
         self.fio_2 = '__________________/'+self.all_form[2]+' '+self.all_form[3][0]+'. '+self.all_form[4][0]+'./'
+
         
         table = document.add_table(rows=3, cols=2)
         
@@ -330,6 +332,7 @@ class Forma(QtWidgets.QWidget):
         hdr_cells[1].text = (self.fio_2)
 
         table.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+
 
         #разрыв страницы
         #заполнение файла .docx(вторая часть - акт)
@@ -367,7 +370,10 @@ class Forma(QtWidgets.QWidget):
                                    ' расположенную по адресу: г. Санкт-Петербург, г. Сестрорецк, Приморское шоссе, д. 293, следующих характеристик:')
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
+
         table = document.add_table(rows=2, cols=7)
+        table.style = 'TableGrid'
+        
         hdr_cells = table.rows[0].cells
         hdr_cells[0].text = 'Номер квартиры'
         hdr_cells[1].text = 'Количество комнат'
@@ -385,6 +391,7 @@ class Forma(QtWidgets.QWidget):
         hdr_cells[4].text = str(self.all_form[15])
         hdr_cells[5].text = str(self.all_form[12])
         hdr_cells[6].text = str(self.all_form[13])
+
 
         p = document.add_paragraph('2. Покупатель не имеет к Продавцу претензий по качеству вышеуказанной квартиры № %(10)s. Покупатель '
                                    'не имеет претензий к Продавцу по срокам передачи вышеуказанной квартиры по настоящему акту, по техническому'
@@ -412,6 +419,7 @@ class Forma(QtWidgets.QWidget):
         p = document.add_paragraph('7. Подписи сторон:')
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
+
         table = document.add_table(rows=3, cols=2)
         
         hdr_cells = table.rows[0].cells
@@ -427,6 +435,7 @@ class Forma(QtWidgets.QWidget):
         hdr_cells[1].text = (self.fio_2)
 
         table.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+
         
         document.save('Договор+акт кв.№ %(10)s.docx'%{"10":self.all_form[10]})
 
