@@ -1,3 +1,9 @@
+﻿'''
+Программа для автозаполнения форм договоров и актов по жилым помещениям (квартирам) по объекту: г. Сестрорецк,
+Приморское шоссе, д. 293 на основании введенных пользователем данных (техническая документация по объекту и
+личные данные покупателей объекта).
+'''
+
 # -*- coding: utf-8 -*-
 
 import sys
@@ -7,7 +13,6 @@ from PyQt5 import QtCore
 from PyQt5. QtWidgets import QMessageBox
 
 from docx import Document
-from docx.shared import Inches
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 
 
@@ -28,9 +33,9 @@ class Forma(QtWidgets.QWidget):
 
         self.text_lst = []
         self.text_lst_2 = []
-        self.text_lst_3 = []
+        self.text_lst_3 = 0
         self.text_lst_4 = 0
-        self.all_form = []
+        self.all_form = ['мужской','1']
 
         #надписи
         self.l_lst = {
@@ -179,33 +184,35 @@ class Forma(QtWidgets.QWidget):
         
         #считывание выбранного варианта для данных типа "пол"
         if i == 1:
-            self.text_lst_3.append('мужской')
-            self.all_form = self.text_lst_3
+            self.text_lst_3 = 'мужской'
+            self.all_form[0] = self.text_lst_3
              
         elif i == 2:
-            self.text_lst_3.append('женский')
-            self.all_form = self.text_lst_3
+            self.text_lst_3 = 'женский'
+            self.all_form[0] = self.text_lst_3
 
     def Komnaty_str(self,i):
         
         #считывание выбранного варианта для данных типа "количество комнат"
         if i == 1:
             self.text_lst_4 = 1
-            self.all_form.append(self.text_lst_4)
+            self.all_form[1] = self.text_lst_4
             
         elif i == 2:
             self.text_lst_4 = 2
-            self.all_form.append(self.text_lst_4)
+            self.all_form[1] = self.text_lst_4
             
         elif i == 3:
             self.text_lst_4 = 3
-            self.all_form.append(self.text_lst_4)
+            self.all_form[1] = self.text_lst_4     
 
     def Save_data(self):
         
         #считывание введенных данных из текстовых полей
         for i in range (17):
             self.text = self.lE_lst[i].text()
+            if self.text == '':
+                self.text = '#Значение!#'
             self.text_lst.append(self.text)
 
         #считывание выбранного варианта для данных типа "дата"
@@ -218,7 +225,7 @@ class Forma(QtWidgets.QWidget):
             
         #формирование списка из считанных данных для последующего переноса в файл .docx
         self.all_form = self.all_form+self.text_lst+self.text_lst_2
-
+        
         #заполнение файла .docx(первая часть - договор)
         document = Document()
         
@@ -254,7 +261,7 @@ class Forma(QtWidgets.QWidget):
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
         
         p = document.add_paragraph('Указанная квартира (кадастровый номер: %(16)s) расположена на %(11)s этаже жилом 10-17-ти этажном доме'
-                                   'со встроенными помещениями 2014 года постройки. Общая площадь квартиры составляет – %(13)s кв.м.;'
+                                   ' со встроенными помещениями 2014 года постройки. Общая площадь квартиры составляет – %(13)s кв.м.;'
                                    ' из нее жилая площадь – %(14)s кв.м.'%{"16":self.all_form[16], "11":self.all_form[11],"13":self.all_form[13],
                                     "14":self.all_form[14]},style='ListNumber')
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
@@ -306,7 +313,7 @@ class Forma(QtWidgets.QWidget):
                                    ,style='ListNumber')
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
         self.fio = self.all_form[2]+' '+self.all_form[3]+' '+self.all_form[4]
-        self.fio_2 = '__________________'+self.all_form[2]+' '+self.all_form[3][0]+'. '+self.all_form[4][0]+'.'
+        self.fio_2 = '__________________/'+self.all_form[2]+' '+self.all_form[3][0]+'. '+self.all_form[4][0]+'./'
         
         table = document.add_table(rows=3, cols=2)
         
@@ -321,6 +328,8 @@ class Forma(QtWidgets.QWidget):
         hdr_cells = table.rows[2].cells
         hdr_cells[0].text = '__________________/Осипов Д. В./'
         hdr_cells[1].text = (self.fio_2)
+
+        table.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
         #разрыв страницы
         #заполнение файла .docx(вторая часть - акт)
@@ -353,7 +362,7 @@ class Forma(QtWidgets.QWidget):
                                             "10":self.all_form[10],"19":self.all_form[19],"20":self.all_form[20]})
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
-        p = document.add_paragraph('1.Квартира передается в том виде и состоянии, в котором она находится на момент передачи ее Покупателю.'
+        p = document.add_paragraph('1. Квартира передается в том виде и состоянии, в котором она находится на момент передачи ее Покупателю.'
                                    ' С момента подписания настоящего акта сторонами Продавец передает Покупателю, а Покупатель принимает квартиру,'
                                    ' расположенную по адресу: г. Санкт-Петербург, г. Сестрорецк, Приморское шоссе, д. 293, следующих характеристик:')
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
@@ -417,8 +426,9 @@ class Forma(QtWidgets.QWidget):
         hdr_cells[0].text = '__________________/Осипов Д. В./'
         hdr_cells[1].text = (self.fio_2)
 
+        table.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
         
-        document.save('demo.docx')
+        document.save('Договор+акт кв.№ %(10)s.docx'%{"10":self.all_form[10]})
 
         self.reply3 = QtWidgets.QMessageBox.question(self, 'Сохранение документа','Документ успешно сохранен!', QMessageBox.Yes)
 
