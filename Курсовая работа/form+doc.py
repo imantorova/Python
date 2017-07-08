@@ -48,7 +48,7 @@ class Forma(QtWidgets.QWidget):
             'width':[44,18,47,83,77,30,54,97,66,25,158,102,81,82,102,102,82,79,18,98,66,92,31],
             'height':[16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16]
             }
-        
+
         for i in range (23):
             self.label = QtWidgets.QLabel(self)
             self.label.setGeometry(QtCore.QRect(self.l_lst['x'][i], self.l_lst['y'][i], self.l_lst['width'][i], self.l_lst['height'][i]))
@@ -62,9 +62,9 @@ class Forma(QtWidgets.QWidget):
             'width':[141,141,161,171,111,171,541,521,110,110,41,41,41,41,321,321,321],
             'height':[20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20]
             }
-        
+
         self.lE_lst = []
-        
+
         for i in range (17):
             self.lineEdit = QtWidgets.QLineEdit(self)
             self.lineEdit.setGeometry(QtCore.QRect(self.e_lst['x'][i], self.e_lst['y'][i], self.e_lst['width'][i], self.e_lst['height'][i]))
@@ -81,7 +81,7 @@ class Forma(QtWidgets.QWidget):
 
             if i == 3:
                 self.lineEdit.setInputMask ("AAAAAAAAAAAAAAAAAAAA")
-                
+
             '''
            для полей данных "паспорт: серия", "номер", "№ квартиры", "этаж", "площадь квартиры с балконом",
            "площадь квартиры", "жилая площадь","площадь кухни", "Сумма договора" назначается маска ввода 
@@ -114,7 +114,7 @@ class Forma(QtWidgets.QWidget):
             if i == 16:
                 self.lineEdit.setInputMask ("9 999 999")
 
-            #параметры всех полей ввода текста записаны в список               
+            #параметры всех полей ввода текста записаны в список
             self.lE_lst.append(self.lineEdit)
 
 
@@ -181,33 +181,33 @@ class Forma(QtWidgets.QWidget):
         self.show()
 
     def Pol_str(self,i):
-        
+
         #считывание выбранного варианта для данных типа "пол"
         if i == 1:
             self.text_lst_3 = 'мужской'
             self.all_form[0] = self.text_lst_3
-             
+
         elif i == 2:
             self.text_lst_3 = 'женский'
             self.all_form[0] = self.text_lst_3
 
     def Komnaty_str(self,i):
-        
+
         #считывание выбранного варианта для данных типа "количество комнат"
         if i == 1:
             self.text_lst_4 = 1
             self.all_form[1] = self.text_lst_4
-            
+
         elif i == 2:
             self.text_lst_4 = 2
             self.all_form[1] = self.text_lst_4
-            
+
         elif i == 3:
             self.text_lst_4 = 3
-            self.all_form[1] = self.text_lst_4     
+            self.all_form[1] = self.text_lst_4
 
     def Save_data(self):
-        
+
         #считывание введенных данных из текстовых полей
         for i in range (17):
             self.text = self.lE_lst[i].text()
@@ -222,22 +222,22 @@ class Forma(QtWidgets.QWidget):
         self.text_lst_2.append(self.text_2)
         self.text_3 = self.dateEdit_3.text()
         self.text_lst_2.append(self.text_3)
-            
+
         #формирование списка из считанных данных для последующего переноса в файл .docx
         self.all_form = self.all_form+self.text_lst+self.text_lst_2
-        
+
         #заполнение файла .docx(первая часть - договор)
         document = Document()
-        
+
         p = document.add_paragraph('Договор купли – продажи квартиры № %(10)s '% {"10":self.all_form[10]})
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        
+
         p = document.add_paragraph('г. Санкт-Петербург')
         p.alignment = WD_ALIGN_PARAGRAPH.LEFT
-        
+
         p = document.add_paragraph('«__» ____________ 201__ года')
         p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-        
+
         p = document.add_paragraph('Общество с ограниченной ответственностью «Карат», являющееся юридическим лицом по законодательству'
                                         ' Российской Федерации, зарегистрированное в МИ МНС № 11 по Санкт-Петербургу Свидетельством '
                                         'о государственной регистрации ЮЛ серия 78 № 004629954 от 31.10.2003 года, ОГРН 1037869011421, '
@@ -245,7 +245,7 @@ class Forma(QtWidgets.QWidget):
                                         ' литера А, пом. 61, в лице генерального директора Осипова Дмитрия Вячеславовича, действующего на'
                                         ' основании Устава, именуемое далее «Продавец», и')
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-        
+
         p = document.add_paragraph('Гражданин Российской Федерации %(2)s %(3)s %(4)s %(19)s года рождения, место рождения:%(5)s, пол: %(0)s, '
                                    'паспорт %(6)s %(7)s выдан %(20)s г. %(8)s, зарегистрированный по адресу (адрес для уведомлений): %(9)s, '
                                    'именуемый далее «Покупатель», с другой стороны,'
@@ -254,12 +254,12 @@ class Forma(QtWidgets.QWidget):
                                     "7":self.all_form[7],"8":self.all_form[8],"9":self.all_form[9],
                                     "19":self.all_form[19],"20":self.all_form[20]})
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-        
+
         p = document.add_paragraph('Продавец продал, а Покупатель купил %(1)s-комнатную квартиру, находящуюся по адресу: гор. Санкт-Петербург,'
                                    ' г. Сестрорецк, Приморское шоссе, д. 293, кв. %(10)s.'%{"1":self.all_form[1],"10":self.all_form[10]},
                                    style='ListNumber')
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-        
+
         p = document.add_paragraph('Указанная квартира (кадастровый номер: %(16)s) расположена на %(11)s этаже жилом 10-17-ти этажном доме'
                                    ' со встроенными помещениями 2014 года постройки. Общая площадь квартиры составляет – %(13)s кв.м.;'
                                    ' из нее жилая площадь – %(14)s кв.м.'%{"16":self.all_form[16], "11":self.all_form[11],"13":self.all_form[13],
@@ -271,7 +271,7 @@ class Forma(QtWidgets.QWidget):
                                    '%(21)s года сделана запись регистрации № %(17)s.'%{"17":self.all_form[17], "21":self.all_form[21]},
                                    style='ListNumber')
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-        
+
         p = document.add_paragraph('Указанная квартира по договоренности сторон продается и покупается за сумму     %(18)s рублей 00 копеек. '
                                    'Взаиморасчеты произведены в полном объеме между Сторонами до подписания настоящего Договора. Стороны '
                                    'финансовых и иных претензий друг к другу не имеют.'% {"18":self.all_form[18]},style='ListNumber')
@@ -312,21 +312,21 @@ class Forma(QtWidgets.QWidget):
         p = document.add_paragraph('Настоящий Договор составлен и подписан в трех экземплярах, имеющих одинаковую юридическую силу.'
                                    ,style='ListNumber')
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-        
+
         self.fio = self.all_form[2]+' '+self.all_form[3]+' '+self.all_form[4]
         self.fio_2 = '__________________/'+self.all_form[2]+' '+self.all_form[3][0]+'. '+self.all_form[4][0]+'./'
 
-        
+
         table = document.add_table(rows=3, cols=2)
-        
+
         hdr_cells = table.rows[0].cells
         hdr_cells[0].text = 'Продавец'
         hdr_cells[1].text = 'Покупатель'
-        
+
         hdr_cells = table.rows[1].cells
         hdr_cells[0].text = 'Генеральный директор ООО "Карат"'
         hdr_cells[1].text = (self.fio)
-        
+
         hdr_cells = table.rows[2].cells
         hdr_cells[0].text = '__________________/Осипов Д. В./'
         hdr_cells[1].text = (self.fio_2)
@@ -337,16 +337,16 @@ class Forma(QtWidgets.QWidget):
         #разрыв страницы
         #заполнение файла .docx(вторая часть - акт)
         p = document.add_page_break()
-         
+
         p = document.add_paragraph('АКТ ПРИЕМА-ПЕРЕДАЧИ КВАРТИРЫ  № %(10)s '% {"10":self.all_form[10]})
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        
+
         p = document.add_paragraph('г. Санкт-Петербург')
         p.alignment = WD_ALIGN_PARAGRAPH.LEFT
-        
+
         p = document.add_paragraph('«__» ____________ 201__ года')
         p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-        
+
         p = document.add_paragraph('Общество с ограниченной ответственностью «Карат», являющееся юридическим лицом по законодательству'
                                         ' Российской Федерации, зарегистрированное в МИ МНС № 11 по Санкт-Петербургу Свидетельством '
                                         'о государственной регистрации ЮЛ серия 78 № 004629954 от 31.10.2003 года, ОГРН 1037869011421, '
@@ -354,7 +354,7 @@ class Forma(QtWidgets.QWidget):
                                         ' литера А, пом. 61, в лице генерального директора Осипова Дмитрия Вячеславовича, действующего на'
                                         ' основании Устава, именуемое далее «Продавец», и')
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-        
+
         p = document.add_paragraph('Гражданин Российской Федерации %(2)s %(3)s %(4)s %(19)s года рождения, место рождения:%(5)s, пол: %(0)s, '
                                    'паспорт %(6)s %(7)s выдан %(20)s г. %(8)s, зарегистрированный по адресу (адрес для уведомлений): %(9)s, '
                                    'именуемый далее «Покупатель», с другой стороны, другой стороны, составили настоящий акт приема-передачи'
@@ -373,7 +373,7 @@ class Forma(QtWidgets.QWidget):
 
         table = document.add_table(rows=2, cols=7)
         table.style = 'TableGrid'
-        
+
         hdr_cells = table.rows[0].cells
         hdr_cells[0].text = 'Номер квартиры'
         hdr_cells[1].text = 'Количество комнат'
@@ -407,7 +407,7 @@ class Forma(QtWidgets.QWidget):
         p = document.add_paragraph('4. С момента подписания Покупателем акта приема-передачи Продавец не несет ответственности за сохранность'
                                    ' передаваемой квартиры № %(10)s.'%{"10":self.all_form[10]})
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-        
+
         p = document.add_paragraph('5. Покупатель за свой счет осуществляет эксплуатацию и ремонт квартиры, а также участвует в расходах, '
                                    'связанных с техническим обслуживанием и ремонтом, в том числе и капитальным, всего дома соразмерно с занимаемой'
                                    ' площадью.')
@@ -421,22 +421,22 @@ class Forma(QtWidgets.QWidget):
 
 
         table = document.add_table(rows=3, cols=2)
-        
+
         hdr_cells = table.rows[0].cells
         hdr_cells[0].text = 'Продавец'
         hdr_cells[1].text = 'Покупатель'
-        
+
         hdr_cells = table.rows[1].cells
         hdr_cells[0].text = 'Генеральный директор ООО "Карат"'
         hdr_cells[1].text = (self.fio)
-        
+
         hdr_cells = table.rows[2].cells
         hdr_cells[0].text = '__________________/Осипов Д. В./'
         hdr_cells[1].text = (self.fio_2)
 
         table.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
-        
+
         document.save('Договор+акт кв.№ %(10)s.docx'%{"10":self.all_form[10]})
 
         self.reply3 = QtWidgets.QMessageBox.question(self, 'Сохранение документа','Документ успешно сохранен!', QMessageBox.Yes)
